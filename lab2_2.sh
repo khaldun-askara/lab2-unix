@@ -38,7 +38,7 @@ function game_iteration {
         if [ ${sticks} -eq 0 ]
         then
             echo "Палочки кончились!"
-            if [ winner ]
+            if [ ${winner} ]
             then
                 echo "Вы победили"
             else
@@ -68,6 +68,7 @@ do
     if [ ${opt} = "1" ]
     then
         game_iteration 1
+        if 
     elif [ ${opt} = "2" ]
     then
         game_iteration 2
@@ -79,6 +80,10 @@ do
         game_iteration 4
     else
         echo "Неправильное количество палочек!"
+    fi
+    if [ ${sticks} -eq 0 ]
+    then
+        exit
     fi
     echo "Выберите, сколько хотите взять палочек!"
 done

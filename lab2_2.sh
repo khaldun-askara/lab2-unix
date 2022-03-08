@@ -43,17 +43,22 @@ do
         if [ ${opt} = "1" ]
         then
             sticks=${sticks}-1
+            echo "${sticks}"
         elif [ ${opt} = "2" ]
         then
             sticks=${sticks}-2
+            echo "${sticks}"
         elif [ ${opt} = "3" ]
         then
             sticks=${sticks}-3
+            echo "${sticks}"
         elif [ ${opt} = "4" ]
         then
             sticks=${sticks}-4
+            echo "${sticks}"
         else
             echo "Bad option"
         fi
     done
+    echo "теперь палочек ${sticks}"
 done

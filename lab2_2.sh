@@ -60,10 +60,10 @@ echo "(__(__)___(__)__)"
 echo "Введите количество палочек!"
 read sticks
 echo "Введено палочек: ${sticks}"
-winner = true
+winner=true
 
 echo "Выберите, сколько хотите взять палочек!"
-select opt in "1 2 3 4"
+select opt in 1 2 3 4
 do
     if [ ${opt} = "1" ]
     then

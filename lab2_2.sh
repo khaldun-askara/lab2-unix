@@ -1,19 +1,61 @@
 #!/bin/bash
 
-function get_variants {
-    variants=""
-    if [ ${sticks} -ge 4 ]
+function valigation{
+    if [ ${sticks} -lt ${1} ]
     then
-        variants="1 2 3 4"
-    elif [ ${sticks} -eq 3 ]
-    then 
-        variants="1 2 3"
-    elif [ ${sticks} -eq 2 ]
+        return 0
+    else
+        return 1
+    fi
+}
+
+function computer{
+    sticks_comp=1
+    case ${sticks} in
+        0)
+            sticks_comp=0
+        ;;
+        1)
+            sticks_comp=1
+        ;;
+        2)
+            let sticks_comp=${sticks_comp}+$(( RANDOM % 2 ))
+        ;;
+        3)
+            let sticks_comp=${sticks_comp}+$(( RANDOM % 3 ))
+        ;;
+        *)
+            let sticks_comp=${sticks_comp}+$(( RANDOM % 3 ))
+        ;;
+    esac
+    if [ ${sticks_comp} -ne 0 ]
     then
-        variants="1 2"
-    elif [ ${sticks} -eq 1 ]
+        echo "Компьютер выбрал ${sticks_comp} палочек"
+        let sticks=${sticks}-${sticks_comp}
+        echo "Теперь палочек ${sticks}"
+        winner=false
+    fi
+}
+function game_iteration{
+    validation "${1}"
+    if [ $? -eq 1 ]
     then
-        variants="1"
+        let sticks=${sticks}-${1}
+        echo "Теперь палочек ${sticks}"
+        winner=true
+        computer
+        if [ ${sticks} -eq 0 ]
+        then
+            echo "Палочки кончились!"
+            if [ winner ]
+            then
+                echo "Вы победили"
+            else
+                echo "Победили роботы"
+            fi
+        fi
+    else
+        echo "Палочек недостаточно!"
     fi
 }
 
@@ -27,36 +69,25 @@ echo "(__(__)___(__)__)"
 echo "Введите количество палочек!"
 read sticks
 echo "Введено палочек: ${sticks}"
-get_variants
-str=$variants
-echo "${str}"
+winner = true
 
 echo "Выберите, сколько хотите взять палочек!"
-get_variants
-OPTIONS=$variants
-select opt in ${OPTIONS}
+select opt in "1 2 3 4"
 do
     if [ ${opt} = "1" ]
     then
-        let sticks=${sticks}-1
-        echo "${sticks}"
+        game_iteration 1
     elif [ ${opt} = "2" ]
     then
-        let sticks=${sticks}-2
-        echo "${sticks}"
+        game_iteration 2
     elif [ ${opt} = "3" ]
     then
-        let sticks=${sticks}-3
-        echo "${sticks}"
+        game_iteration 3
     elif [ ${opt} = "4" ]
     then
-        let sticks=${sticks}-4
-        echo "${sticks}"
+        game_iteration 4
     else
-        echo "Bad option"
+        echo "Неправильное количество палочек!"
     fi
-    echo "bruh"
-    get_variants
-    OPTIONS=$variants
-    echo "${OPTIONS}"
+    echo "Выберите, сколько хотите взять палочек!"
 done

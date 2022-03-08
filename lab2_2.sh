@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function computer{
+function computer {
     sticks_comp=1
     case ${sticks} in
         0)
@@ -27,7 +27,8 @@ function computer{
         winner=false
     fi
 }
-function game_iteration{
+
+function game_iteration {
     if [ ${sticks} -ge ${1} ]
     then
         let sticks=${sticks}-${1}

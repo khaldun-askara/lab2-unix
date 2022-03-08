@@ -1,14 +1,5 @@
 #!/bin/bash
 
-function valigation{
-    if [ ${sticks} -lt ${1} ]
-    then
-        return 0
-    else
-        return 1
-    fi
-}
-
 function computer{
     sticks_comp=1
     case ${sticks} in
@@ -37,8 +28,7 @@ function computer{
     fi
 }
 function game_iteration{
-    validation "${1}"
-    if [ $? -eq 1 ]
+    if [ ${sticks} -ge ${1} ]
     then
         let sticks=${sticks}-${1}
         echo "Теперь палочек ${sticks}"

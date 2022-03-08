@@ -21,10 +21,10 @@ function computer {
     esac
     if [ ${sticks_comp} -ne 0 ]
     then
-        echo "Компьютер выбрал ${sticks_comp} палочек"
+        echo "Киса выбрал ${sticks_comp} палочек"
         let sticks=${sticks}-${sticks_comp}
         echo "Теперь палочек ${sticks}"
-        winner=false
+        winner=0
     fi
 }
 
@@ -33,16 +33,16 @@ function game_iteration {
     then
         let sticks=${sticks}-${1}
         echo "Теперь палочек ${sticks}"
-        winner=true
+        winner=1
         computer
         if [ ${sticks} -eq 0 ]
         then
             echo "Палочки кончились!"
-            if [ ${winner} ]
+            if [ ${winner} -eq 1 ]
             then
                 echo "Вы победили"
             else
-                echo "Победили роботы"
+                echo "Победил киса"
             fi
         fi
     else
@@ -59,16 +59,26 @@ echo " ( (  )   (  ) )"
 echo "(__(__)___(__)__)"
 echo "Введите количество палочек!"
 read sticks
-echo "Введено палочек: ${sticks}"
-winner=true
+if (echo "${sticks}" | grep -E -q "^?[0-9]+$")
+then
+    echo "Введено палочек: ${sticks}"
+else
+    echo "Это не число, вы дурашка!!! Котик не будет играть с вами!"
+    exit 1
+fi
+if [ ${sticks} -lt 1 ]
+then
+    echo "Введено некорректное число палочек! Киса не будет с вами играть!"
+    exit 1
+fi
+winner=1
 
 echo "Выберите, сколько хотите взять палочек!"
 select opt in 1 2 3 4
 do
     if [ ${opt} = "1" ]
     then
-        game_iteration 1
-        if 
+        game_iteration 1 
     elif [ ${opt} = "2" ]
     then
         game_iteration 2

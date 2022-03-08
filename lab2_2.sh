@@ -55,4 +55,8 @@ do
     else
         echo "Bad option"
     fi
+    echo "bruh"
+    get_variants
+    OPTIONS=$variants
+    echo "${OPTIONS}"
 done

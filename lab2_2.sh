@@ -40,9 +40,9 @@ function game_iteration {
             echo "Палочки кончились!"
             if [ ${winner} -eq 1 ]
             then
-                echo "Вы победили"
-            else
                 echo "Победил киса"
+            else
+                echo "Вы победили"
             fi
         fi
     else

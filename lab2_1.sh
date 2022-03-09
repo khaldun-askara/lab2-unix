@@ -6,9 +6,8 @@ then
     exit 1
 fi
 
-let z=${1}*${3}+${2}
-
-if [ ${4} -eq ${z} ]
+z=$(echo "${1}*${3}+${2}" | bc -l)
+if [ $(echo "$4==${z}" | bc) -eq 1 ]
 then
     echo "yes"
 else
